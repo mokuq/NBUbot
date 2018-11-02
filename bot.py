@@ -1,5 +1,4 @@
 #!/usr/bin/python3.6
-
 import telebot
 import urllib
 import json
