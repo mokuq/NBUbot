@@ -1,5 +1,5 @@
 #!/usr/bin/python3.6
-import telebot
+import telebot # pip install pyTelegramBotAPI 
 import urllib
 import json
 import datetime
