@@ -30,4 +30,12 @@ def sendcurrency(message):
     bot.send_message(message.chat.id, get_rate(message.text))
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True)
+    # while True:
+    # try:
+    #     bot.polling(none_stop=True)
+
+    # except Exception as e:
+    #     print(e)  # или просто print(e) если у вас логгера нет,
+    #     # или import traceback; traceback.print_exc() для печати полной инфы
+    #     time.sleep(15)
+    bot.infinity_polling(True)
