@@ -1,4 +1,4 @@
 # NBUbot
 NBU (National Bank of Ukraine) currency rates 
 
-Simple NBU rate bot, @NBU_Rate_bot
+Simple NBU rate bot, https://t.me/NBU_Rate_bot
