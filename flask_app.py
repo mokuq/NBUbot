@@ -62,7 +62,7 @@ def sendcurrency(message):
 
 @bot.message_handler(content_types=["audio", "document", "photo", "sticker", "video", "video_note", "voice", "location", "contact"])
 def sendmessage(message):
-    bot.send_message(message.chat.id, "This connent is not supported. Please, specify a currency name in a right way: \n /USD or \n /EUR  or \n USD, EUR \n etc ")
+    bot.send_message(message.chat.id, "This content is not supported. Please, specify a currency name in a right way: \n /USD or \n /EUR  or \n USD, EUR \n etc ")
 # audio, document, photo, sticker, video, video_note, voice, location, contact
 
 
