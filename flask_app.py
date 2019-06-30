@@ -1,4 +1,4 @@
-# it is a bot witha webhook
+# it is a bot with a webhook
 import telebot # pip install pyTelegramBotAPI
 import urllib
 import json
@@ -34,7 +34,7 @@ def get_rate(currency):
 	try:
 		answer = f"NBU rate {currencyname} / HRN =  {json.load(content)[0]['rate']} for today ({todaydate})"
 	except IndexError:
-		answer = "Please, specify currency in a right way: \n /USD or \n /EUR  or \n USD, EUR \n etc"
+		answer = "Please, specify a currency name in a right way: \n /USD or \n /EUR  or \n USD, EUR \n etc"
 	return answer
 
 @bot.message_handler(commands=['start', 'help'])
@@ -60,7 +60,10 @@ def sendcurrency(message):
 
     bot.send_message(message.chat.id, get_rate(message.text))
 
-
+@bot.message_handler(content_types=["audio", "document", "photo", "sticker", "video", "video_note", "voice", "location", "contact"])
+def sendmessage(message):
+    bot.send_message(message.chat.id, "This connent is not supported. Please, specify a currency name in a right way: \n /USD or \n /EUR  or \n USD, EUR \n etc ")
+# audio, document, photo, sticker, video, video_note, voice, location, contact
 
 
 @app.route('/')
