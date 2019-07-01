@@ -27,6 +27,11 @@ def telegram_webhook():
 
 def get_rate(currency):
 	currencyname = currency.replace("/", "").upper()
+	listofcurrencies = ["AUD", "CAD", "CNY", "HRK", "CZK", "DKK", "HKD", "HUF", "INR", "IDR", "IRR", "ILS", "JPY", "KZT", "KRW", "MXN", "MDL", "NZD", "NOK", "RUB", "SAR", "SGD", "ZAR", "SEK", "CHF", "EGP", "GBP", "USD", "BYN", "AZN", "RON", "TRY", "XDR", "BGN", "EUR", "PLN", "DZD", "BDT", "AMD", "IQD", "KGS", "LBP", "LYD", "MYR", "MAD", "PKR", "VND", "THB", "AED", "TND", "UZS", "TWD", "TMT", "GHS", "RSD", "TJS", "GEL", "XAU", "XAG", "XPT", "XPD"]
+	if currencyname not in listofcurrencies:
+	    answer =  "Please, specify a currency name in a right way: \n /USD or \n /EUR  or \n USD, EUR \n etc."
+	    return answer
+
 	# https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&date=20181030&json
 	todaydate = datetime.datetime.now().strftime("%Y%m%d")
 	URL= 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=' + currencyname + '&date=' + todaydate + '&json'
