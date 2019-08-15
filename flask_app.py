@@ -1,12 +1,13 @@
 # it is a bot with a webhook
-import telebot  # pip install pyTelegramBotAPI
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import urllib
 import json
 import datetime
-from config import TOKEN, SECRET, URL
+
+import telebot  # pip install pyTelegramBotAPI
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from flask import Flask, request, abort
 
+from config import TOKEN, SECRET, URL
 
 bot = telebot.TeleBot(TOKEN, threaded=False)
 bot.remove_webhook()
