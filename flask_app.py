@@ -69,13 +69,11 @@ def gen_markup():
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    # stat("004")
     bot.send_message(message.chat.id, "Please, select a  currency", reply_markup=gen_markup())
 
 
 @bot.message_handler(commands=['list'])
 def send_list(message):
-    # stat("005")
     bot.send_message(message.chat.id, lstcur)
 
 @bot.message_handler(content_types=["audio", "document", "photo", "sticker", "video", "video_note", "voice", "location", "contact"])
@@ -100,10 +98,8 @@ def callback_query(call):
 def message_handler(message):
     txt = message.text.replace("/", "").upper()
     if txt in listofcurrencies:
-        # stat("008")
         bot.send_message(message.chat.id, get_rate(message.text))
     else:
-        # stat("009")
         bot.send_message(message.chat.id, "Please, select a  currency", reply_markup=gen_markup())
 
     stat(message.chat.id) # comment it when stat.txt file became havy
