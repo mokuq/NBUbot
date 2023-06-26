@@ -42,39 +42,41 @@ def stat(id):
 def get_rate(currency):
     currencyname = currency.replace("/", "").upper()
     if currencyname not in listofcurrencies:
-        answer = "Please, specify a currency name in a right way: \n /USD or \n /EUR  or \n USD, EUR \n etc."
+        answer = "Please, specify a currency name in the right way: \n /USD or \n /EUR or \n USD, EUR, etc."
         return answer
 
-    # https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&date=20181030&json
     todaydate = datetime.datetime.now().strftime("%Y%m%d")
     URL = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=' + currencyname + '&date=' + todaydate + '&json'
     content = urllib.request.urlopen(URL)
     try:
         answer = f"NBU rate {currencyname} / UAH =  {json.load(content)[0]['rate']} for today ({todaydate})"
     except IndexError:
-        answer = "Something went wrong. Please try againe later"
-    return answer
+        answer = "Something went wrong. Please try again later"
 
+    return answer
 
 def gen_markup():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton("USD", callback_data="USD"),
-               InlineKeyboardButton("EUR", callback_data="EUR"),
-               InlineKeyboardButton("other", callback_data="other"))
+    markup.add(
+        InlineKeyboardButton("USD", callback_data="get_rate/USD"),
+        InlineKeyboardButton("EUR", callback_data="get_rate/EUR"),
+        InlineKeyboardButton("other", callback_data="other")
+    )
     return markup
+
 
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
+    # stat("004")
     bot.send_message(message.chat.id, "Please, select a  currency", reply_markup=gen_markup())
 
 
 @bot.message_handler(commands=['list'])
 def send_list(message):
-
+    # stat("005")
     bot.send_message(message.chat.id, lstcur)
-
 
 @bot.message_handler(content_types=["audio", "document", "photo", "sticker", "video", "video_note", "voice", "location", "contact"])
 def sendmessage(message):
@@ -84,22 +86,27 @@ def sendmessage(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    if call.data == "other":
+    callback_data = call.data.split("/")
+    action = callback_data[0]
+    if action == "get_rate":
+        currency_code = callback_data[1]
+        answer = get_rate(currency_code)
+        bot.send_message(call.from_user.id, answer)
+    elif action == "other":
         bot.send_message(call.from_user.id, lstcur)
-    else:
-        bot.send_message(call.from_user.id, get_rate(call.data))
-        stat(call.from_user.id)
 
 
 @bot.message_handler(content_types=["text"])
 def message_handler(message):
     txt = message.text.replace("/", "").upper()
     if txt in listofcurrencies:
+        # stat("008")
         bot.send_message(message.chat.id, get_rate(message.text))
     else:
+        # stat("009")
         bot.send_message(message.chat.id, "Please, select a  currency", reply_markup=gen_markup())
 
-    stat(message.chat.id)
+    stat(message.chat.id) # comment it when stat.txt file became havy
 
 
 @app.route('/')
